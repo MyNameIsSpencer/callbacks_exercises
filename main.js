@@ -129,7 +129,7 @@ console.log( 'The total number of transactions is:', totalTransactions );
   HINT(S):
   - Not all transactions are 'sales'.
 */
-var numSales;
+var numSales = transactions.filter(transaction => transaction['type'] === 'sale').length;
 
 /*
   Hey, welcome to the first question!
@@ -159,7 +159,7 @@ console.log( 'The total number of sales is:', numSales );
 /*
   Calculate the total number of 'purchases'.
 */
-var numPurchases;
+var numPurchases = transactions.filter(transaction => transaction['type'] === 'purchase').length;;
 
 console.log( 'The total number of purchases is:', numPurchases );
 
@@ -173,7 +173,7 @@ console.log( 'The total number of purchases is:', numPurchases );
   HINT(S):
   - Don't forget that 'purchases' can also be made in 'cash'!
 */
-var numCashSales;
+var numCashSales = transactions.filter(transaction => transaction['type'] === 'sale').filter( transaction => transaction['paymentMethod'] === 'cash').length;
 
 console.log( 'The total number of cash sales is:', numCashSales );
 
