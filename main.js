@@ -254,7 +254,14 @@ console.log( 'The unique customers are:', uniqueCustomers );
   - There may be more than 1 'sale' that includes 5 or more items.
   - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
 */
-var bigSpenders;
+var bigSpenders = [];
+
+transactions.forEach (function(transaction){
+  if (transaction.items.length > 4) {
+    var arrr = {name: transaction.customer, numItems: transaction.items.length, method: transaction.paymentMethod, type: transaction.type};
+    bigSpenders.push(arrr);
+  }
+});
 
 console.log( 'The "big spenders" are:', bigSpenders );
 
@@ -268,7 +275,16 @@ console.log( 'The "big spenders" are:', bigSpenders );
   HINT(S):
   - Transactions don't have 'prices', but their 'items' do!
 */
-var sumSales;
+
+
+var firstSale = transactions.filter(transaction => transaction['type'] === 'sale')[0]['items'];
+var firstSummer = [];
+firstSale.forEach (function(item){
+  firstSummer.push(item.price);
+});
+
+
+var sumSales = firstSummer.reduce((total, amount) => total + amount);
 
 console.log( 'The sum of all sales is:', sumSales );
 
@@ -284,8 +300,20 @@ console.log( 'The sum of all sales is:', sumSales );
   - Make sure to include 'price' information from *all* purchases.
 */
 
-var sumPurchases;
+var allPurchaseCollections = [];
+var allPurchasePrices = [];
+var purchasers = transactions.filter(transaction => transaction['type'] === 'purchase');
+purchasers.forEach (function(transaction){
+  transaction['items'].forEach (function(collection){
+    allPurchaseCollections.push(collection);
+  })
+});
 
+allPurchaseCollections.forEach (function(item) {
+  allPurchasePrices.push(item.price)
+});
+
+var sumPurchases = allPurchasePrices.reduce((total, amount) => total + amount);
 console.log( 'The sum of all purhcases is:', sumPurchases );
 
 
@@ -302,7 +330,16 @@ console.log( 'The sum of all purhcases is:', sumPurchases );
   HINT(S):
   - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
 */
-var netProfit;
+
+var allSalePrices = [];
+var Salers = transactions.filter(transaction => transaction['type'] === 'sale');
+Salers.forEach (function(transaction){
+  allSalePrices.push(transaction['items'][0]['price'])
+});
+var sumOfSales = allSalePrices.reduce((total, amount) => total + amount);
+
+
+var netProfit = sumPurchases + sumOfSales;
 
 console.log( 'The net profit is:', netProfit );
 
