@@ -187,7 +187,7 @@ console.log( 'The total number of cash sales is:', numCashSales );
   HINT(S):
   - Make sure to exclude any 'sales' made by 'credit'!
 */
-var numCreditPurchases;
+var numCreditPurchases = transactions.filter(transaction => transaction['type'] === 'purchase').filter( transaction => transaction['paymentMethod'] === 'credit').length;
 
 console.log( 'The total number of credit purchases is:', numCreditPurchases );
 
@@ -204,7 +204,14 @@ console.log( 'The total number of credit purchases is:', numCreditPurchases );
   - The assembled array should be made up of strings, not full `transaction` objects.
   - This array is allowed to contain duplicate values.
 */
-var uniqueVendors;
+
+var uniqueVendors = [];
+
+transactions.forEach (function(transaction){
+  if (transaction.vendor) {
+    uniqueVendors.push(transaction.vendor)
+  }
+});
 
 console.log( 'The unique vendors are:', uniqueVendors );
 
@@ -221,7 +228,15 @@ console.log( 'The unique vendors are:', uniqueVendors );
   - The assembled array should be made up of strings, not full `transaction` objects.
   - Make sure that the resulting array *does not* include any duplicates.
 */
-var uniqueCustomers;
+var uniqueCustomers = [];
+
+transactions.forEach (function(transaction){
+  if (transaction.customer) {
+    if (!uniqueCustomers.includes(transaction.customer)) {
+      uniqueCustomers.push(transaction.customer)
+    }
+  }
+});
 
 console.log( 'The unique customers are:', uniqueCustomers );
 
