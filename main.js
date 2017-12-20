@@ -353,7 +353,13 @@ console.log( 'The net profit is:', netProfit );
   HINTS:
   - The result of this calculation should be a number (not an array, object, or other data type).
 */
-var mostItems;
+var numSaleItems =[];
+Salers.forEach (function(transaction){
+  numSaleItems.push(transaction['items'].length)
+});
+
+
+var mostItems = Math.max(...numSaleItems);
 
 console.log( 'The most items sold in a single transaction is:', mostItems );
 
@@ -364,6 +370,26 @@ console.log( 'The most items sold in a single transaction is:', mostItems );
 /*
   Calculate the sum of the 'purchase' with the fewest items.
 */
-var sumOfSmallestPurchase;
+
+
+
+var numPurchaseItems =[];
+
+purchasers.forEach (function(transaction) {
+  numPurchaseItems.push(transaction['items'].length)
+});
+
+var leastItems = Math.min(...numPurchaseItems);
+var itemCatch = []
+purchasers.forEach (function(transaction){
+  if (transaction['items'].length === leastItems) {
+    transaction['items'].forEach (function(item){
+      itemCatch.push(item.price);
+    })
+  }
+});
+
+
+var sumOfSmallestPurchase = itemCatch.reduce((total, amount) => total + amount);
 
 console.log( 'The sum of the smallest purchase is:', sumOfSmallestPurchase );
